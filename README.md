@@ -18,15 +18,17 @@ To run this project, you will need to add the following environment variables to
 
 `TOKEN_SECRET`
 
-`MYSQL_HOST`
+`DB_HOST`
 
-`MYSQL_PORT`
+`DB_PORT`
 
-`MYSQL_USER`
+`DB_USER`
 
-`MYSQL_PASS`
+`DB_PASS`
 
-`MYSQL_DB`
+`DB_NAME`
+
+`DB_DIALECT`
 
 ## Features
 
