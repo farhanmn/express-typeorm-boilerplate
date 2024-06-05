@@ -12,7 +12,7 @@ export default {
         where: { [Op.or]: [{ phone }, { email }] },
       })
       if (user) {
-        return res.stdFormat(
+        return res.stdJson(
           SC.UNPROCESSABLE,
           null,
           'User with that email or phone already exists'
@@ -25,14 +25,14 @@ export default {
         password,
         phone,
       })
-      return res.stdFormat(
+      return res.stdJson(
         SC.CREATED,
         null,
         'Account created successfully, please login'
       )
     } catch (e) {
       console.log(e)
-      return res.stdFormat(
+      return res.stdJson(
         SC.SERVER_ERROR,
         null,
         'Could not perform operation at this time, kindly try again later.'

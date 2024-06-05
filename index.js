@@ -1,4 +1,3 @@
-import createError from 'http-errors'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import path from 'path'
@@ -7,7 +6,7 @@ import route from './src/routes'
 dotenv.config()
 
 import logger from './src/helper/logger'
-import standardFormat from './src/middlewares/stdFormat'
+import standardFormat from './src/middlewares/stdJson'
 
 const app = express()
 
@@ -20,10 +19,6 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 route(app)
-
-app.use(function (req, res, next) {
-  next(createError(404))
-})
 
 const port = process.env.PORT || 3000
 
