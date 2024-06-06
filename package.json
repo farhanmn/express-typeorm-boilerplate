@@ -2,28 +2,30 @@
   "name": "express-boilerplate",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
-    "dev": "nodemon --exec babel-node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "typeorm:generate": "npx typeorm-ts-node-esm migration:generate src/database/migrations/migrations -d src/models/index.js -p -o",
+    "typeorm:migrate": "npx typeorm-ts-node-esm migration:run -d ./src/models/index.js"
   },
   "author": "Muhammad Farhan",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/node": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
     "chalk": "^4.1.2",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
     "morgan": "^1.10.0",
     "mysql2": "^3.10.0",
     "pg": "^8.5.1",
-    "sequelize": "^6.5.0"
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "ts-node": "^10.9.2"
   }
 }

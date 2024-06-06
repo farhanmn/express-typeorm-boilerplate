@@ -1,4 +1,4 @@
-import { getName } from '../helper/statuscode'
+import { getName } from '../helper/statuscode.js'
 
 const formatJson = (status, data, message) => {
   return {

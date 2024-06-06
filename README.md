@@ -33,12 +33,12 @@ To run this project, you will need to add the following environment variables to
 ## Features
 
 - `nodemon`
-- `jsonwebtoken`
+- `jsonwebtoken`[^1]
 - Logger with `morgan` and `chalk`
-- ORM with `sequelize`
-- Supported DB:
-  - MySQL
+- ORM with `typeorm`
 
 ## Authors
 
 - [@farhannjb](https://github.com/farhannjb)
+
+[^1]: On development

@@ -1,44 +1,24 @@
-import fs from 'fs'
-import path from 'path'
-import Sequelize from 'sequelize'
-import enVariables from '../config'
+import { DataSource } from 'typeorm'
+import enVariables from '../config/index.js'
 
-const basename = path.basename(__filename)
 const config = enVariables
-const db = {}
 
-let sequelize
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config)
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  )
-}
-
-fs.readdirSync(__dirname)
-  .filter(
-    (file) =>
-      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
-  )
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file)).default(
-      sequelize,
-      Sequelize.DataTypes
-    )
-    db[model.name] = model
-  })
-
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db)
-  }
+const dataSource = new DataSource({
+  type: config.dialect || 'mysql',
+  host: config.host,
+  port: config.port || 3306,
+  username: config.username,
+  password: config.password,
+  database: config.database,
+  synchronize: false,
+  entities: ['src/models/entity/**/*{.ts,.js}'],
+  migrations: ['src/database/migrations/**/*{.ts,.js}'],
+  cli: {
+    migrationsDir: 'src/database/migrations',
+  },
+  migrationsTableName: 'typeorm_migration',
 })
 
-db.sequelize = sequelize
-db.Sequelize = Sequelize
+dataSource.initialize().then(() => console.log('connected to DB succesfully!'))
 
-export default db
+export default dataSource

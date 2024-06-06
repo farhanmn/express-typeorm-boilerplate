@@ -1,15 +1,13 @@
-import { Op } from 'sequelize'
-import model from '../models'
-import { SC } from '../helper/statuscode'
-
-const { User } = model
+import { SC } from '../helper/statuscode.js'
+import dataSource from '../models/index.js'
+const userRepository = dataSource.getRepository('User')
 
 export default {
   async signUp(req, res) {
     const { email, password, name, phone } = req.body
     try {
-      const user = await User.findOne({
-        where: { [Op.or]: [{ phone }, { email }] },
+      const user = await userRepository.findOne({
+        where: [{ phone }, { email }],
       })
       if (user) {
         return res.stdJson(
@@ -18,13 +16,14 @@ export default {
           'User with that email or phone already exists'
         )
       }
-
-      await User.create({
+      console.log('masuk')
+      const newUser = userRepository.create({
         name,
         email,
         password,
         phone,
       })
+      await userRepository.save(newUser)
       return res.stdJson(
         SC.CREATED,
         null,
