@@ -1,6 +1,6 @@
 # Express Boilerplate
 
-An Express Boilerplate with Javascript ES6 style and Sequelize
+An Express Boilerplate with Javascript ES6 style and TypeORM
 
 ## Installation
 
