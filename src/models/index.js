@@ -11,6 +11,7 @@ const dataSource = new DataSource({
   password: config.password,
   database: config.database,
   synchronize: false,
+  logging: config.logging,
   entities: ['src/models/entity/**/*{.ts,.js}'],
   migrations: ['src/database/migrations/**/*{.ts,.js}'],
   cli: {

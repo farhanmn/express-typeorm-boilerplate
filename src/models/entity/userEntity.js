@@ -7,31 +7,30 @@ const UserEntity = new EntitySchema({
   target: User,
 
   columns: {
-    id: { primary: true, type: 'text', generated: 'uuid' },
-
-    name: { type: 'varchar' },
-
-    fullname: { type: 'varchar' },
-
-    email: { type: 'varchar' },
-
-    phone: { type: 'varchar' },
-
-    password: { type: 'varchar' },
-
-    status: { type: 'tinyint', default: 1, comment: '0=Inactive, 1=Active' },
-
-    last_login_at: { type: 'timestamp' },
-
-    last_ip_address: { type: 'varchar' },
-
+    user_id: { primary: true, type: 'text', generated: 'uuid' },
+    user_name: { type: 'varchar' },
+    user_email: { type: 'varchar' },
+    user_phone: { type: 'varchar' },
+    user_password: { type: 'varchar' },
+    user_password_salt: { type: 'varchar', nullable: true },
+    user_status: {
+      type: 'tinyint',
+      default: 1,
+      comment: '0=Inactive, 1=Active',
+    },
+    user_last_login_at: {
+      type: 'timestamp',
+      default: () => 'CURRENT_TIMESTAMP',
+    },
+    user_last_ip_address: { type: 'varchar', nullable: true },
     created_at: {
       type: 'timestamp',
       default: () => 'CURRENT_TIMESTAMP',
     },
-
     updated_at: {
       type: 'timestamp',
+      onUpdate: 'CURRENT_TIMESTAMP',
+      nullable: true,
     },
   },
 })

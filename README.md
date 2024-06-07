@@ -25,12 +25,16 @@ To run this project, you will need to add the following environment variables to
 `DB_PASS`
 `DB_NAME`
 `DB_DIALECT`
+`JWT_SECRET`
+`JWT_REFRESH_SECRET`
+`JWT_ALGORITHM`
+`JWT_EXPIRES_IN`
 
 ## Tech
 
 - [expressJS](https://expressjs.com/) - a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications
 - [nodemon](https://nodemon.io/) - Simple monitor script for use during development of a Node.js app
-- [JWT](https://jwt.io/)[^1] - a compact URL-safe means of representing claims to be transferred between two parties
+- [JWT](https://jwt.io/) - a compact URL-safe means of representing claims to be transferred between two parties
 - [morgan](https://github.com/expressjs/morgan) - HTTP request logger middleware for node.js
 - [chalk](https://github.com/chalk/chalk#readme) - Terminal string styling done right
 - [TypeORM](https://typeorm.io/) - an ORM that can run in NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo, and Electron platforms and can be used with TypeScript and JavaScript (ES2021)
@@ -45,5 +49,3 @@ To run this project, you will need to add the following environment variables to
 ## Authors
 
 - [@farhannjb](https://github.com/farhannjb)
-
-[^1]: On development

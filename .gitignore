@@ -4,4 +4,8 @@ package-lock.json
 node_modules
 .DS_Store
 
-dist
+src/database/migrations/*
+!src/database/migrations/.gitkeep
+
+public/*
+!public/.gitkeep

@@ -9,6 +9,7 @@ const port = process.env.DB_PORT
 const dialect = process.env.DB_DIALECT
 const node_env = process.env.NODE_ENV
 const use_env_variable = process.env.USE_ENV_VARIABLE || false
+const logging = process.env.DB_LOGGING || true
 
 const config = {
   development: {
@@ -18,6 +19,7 @@ const config = {
     host,
     port,
     dialect,
+    logging,
     use_env_variable,
   },
   testing: {
@@ -27,7 +29,7 @@ const config = {
     host,
     port,
     dialect,
-    logging: true,
+    logging,
     use_env_variable,
   },
   production: {
@@ -37,7 +39,7 @@ const config = {
     host,
     port,
     dialect,
-    logging: true,
+    logging,
     use_env_variable,
   },
 }
