@@ -12,10 +12,10 @@ const UserEntity = new EntitySchema({
     user_email: { type: 'varchar' },
     user_phone: { type: 'varchar' },
     user_password: { type: 'varchar' },
-    user_password_salt: { type: 'varchar', nullable: true },
+    user_password_salt: { type: 'varchar' },
     user_status: {
       type: 'tinyint',
-      default: 1,
+      default: () => '1',
       comment: '0=Inactive, 1=Active',
     },
     user_last_login_at: {
@@ -23,6 +23,7 @@ const UserEntity = new EntitySchema({
       default: () => 'CURRENT_TIMESTAMP',
     },
     user_last_ip_address: { type: 'varchar', nullable: true },
+    is_deleted: { type: 'tinyint', default: () => '0' },
     created_at: {
       type: 'timestamp',
       default: () => 'CURRENT_TIMESTAMP',

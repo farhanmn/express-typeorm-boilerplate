@@ -41,10 +41,10 @@ To run this project, you will need to add the following environment variables to
 
 ## Script
 
-- `npm start` - Runs the application using Node.js
-- `npm run dev` - Runs the application in development mode with automatic restarts using `nodemon`
-- `npm run typeorm:generate` - Generates a new migration file based on changes to the entities
-- `npm run typeorm:migrate` - Applies pending migrations to the database
+- `yarn start` - Runs the application using Node.js
+- `yarn run dev` - Runs the application in development mode with automatic restarts using `nodemon`
+- `yarn run typeorm:generate` - Generates a new migration file based on changes to the entities
+- `yarn run typeorm:migrate` - Applies pending migrations to the database
 
 ## Authors
 
