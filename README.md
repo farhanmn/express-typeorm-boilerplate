@@ -46,8 +46,8 @@ To run this project, you will need to add the following environment variables to
 - `yarn run typeorm:generate`[^1] - Generates a new migration file based on changes to the entities
 - `yarn run typeorm:migrate` - Applies pending migrations to the database
 
-[^1]: If you have generated the migration script, please make sure to change it to ES6 style, such as changing `module.exports` to `export`.
-
 ## Authors
 
 - [@farhannjb](https://github.com/farhannjb)
+
+[^1]: If you have generated the migration script, please make sure to change it to ES6 style, such as changing `module.exports` to `export` and remove all imported data.
