@@ -1,6 +1,8 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import path from 'path'
+import helmet from 'helmet'
+import compression from 'compression'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import route from './src/routes/index.js'
@@ -9,11 +11,16 @@ dotenv.config()
 import logger from './src/helper/logger.js'
 import standardFormat from './src/middlewares/stdJson.js'
 
+import { limiter } from './src/helper/security.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = express()
 
+app.use(compression())
+app.use(helmet())
+app.use(limiter)
 app.use(standardFormat)
 app.use(logger)
 app.use(express.json())
