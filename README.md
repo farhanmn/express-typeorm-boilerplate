@@ -25,6 +25,7 @@ To run this project, you will need to add the following environment variables to
 `DB_PASS`
 `DB_NAME`
 `DB_DIALECT`
+`DB_LOGGING`
 `JWT_SECRET`
 `JWT_REFRESH_SECRET`
 `JWT_ALGORITHM`
@@ -50,4 +51,4 @@ To run this project, you will need to add the following environment variables to
 
 - [@farhannjb](https://github.com/farhannjb)
 
-[^1]: If you have generated the migration script, please make sure to change it to ES6 style, such as changing `module.exports` to `export` and remove all imported data.
+[^1]: If you have generated the migration script, please make sure to change it to ES6 style, such as changing `module.exports` to `export` and remove all unnucessary imported data.
