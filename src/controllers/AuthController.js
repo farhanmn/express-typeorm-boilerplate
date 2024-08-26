@@ -1,62 +1,57 @@
-import { SC } from '../helper/statuscode.js'
-import dataSource from '../models/index.js'
-
-import { hash } from '../helper/crypto.js'
-import { create_token, verify } from '../helper/user.js'
 import moment from 'moment'
 
-const userRepository = dataSource.getRepository('User')
+import { SC } from '../helper/statuscode.js'
+import { create_token, verify } from '../helper/user.js'
+import userServices from '../services/userServices.js'
+import { errorValue, validateParams } from '../helper/validate.js'
 
 const signUp = async (req, res) => {
   const { user_email, user_password, user_name, user_phone } = req.body
   try {
-    const user = await userRepository.findOne({
-      where: [{ user_phone }, { user_email }],
-    })
-    if (user) {
-      return res.stdJson(
-        SC.UNPROCESSABLE,
-        null,
-        'User with that email or phone already exists'
-      )
-    }
+    validateParams(req.body, ['user_email', 'user_password'])
 
-    const hashpassword = hash(user_password)
-    const newUser = userRepository.create({
+    const user = await userServices.checkUser({ user_email })
+
+    errorValue(user, {
+      statusCode: SC.UNPROCESSABLE,
+      message: 'User with that email or phone already exists',
+    })
+
+    await userServices.createUser({
       user_name,
       user_email,
-      user_password: hashpassword.pwd,
-      user_password_salt: hashpassword.salt,
+      user_password,
       user_phone,
     })
-    await userRepository.save(newUser)
+
     return res.stdJson(SC.CREATED, null)
   } catch (e) {
     console.log(e)
-    return res.stdJson(
-      SC.SERVER_ERROR,
-      null,
-      'Could not perform operation at this time, kindly try again later.'
-    )
+    const stCode = e.statusCode || SC.SERVER_ERROR
+    const message = e.message || 'Could not perform operation at this time'
+
+    return res.stdJson(stCode, message, null)
   }
 }
 
 const signIn = async (req, res) => {
-  const { user_email, user_phone, user_password } = req.body
+  const { user_email, user_password } = req.body
   try {
-    const user = await userRepository.findOne({
-      where: [{ user_phone }, { user_email }],
+    validateParams(req.body, ['user_email', 'user_password'])
+
+    const user = await userServices.checkUser({ user_email })
+    errorValue(!user, {
+      statusCode: SC.UNAUTHORIZED,
+      message: 'User with that email or phone does not exist',
     })
-    if (!user) {
-      return res.stdJson(SC.UNAUTHORIZED, null)
-    }
 
     const verifyData = verify(user, { user_password })
-    if (!verifyData) {
-      return res.stdJson(SC.UNAUTHORIZED, null)
-    }
+    errorValue(!verifyData, {
+      statusCode: SC.UNAUTHORIZED,
+      message: 'email or password is incorrect',
+    })
 
-    await userRepository.save({
+    await userServices.updateUser({
       user_id: user.user_id,
       user_last_login_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     })
@@ -65,11 +60,10 @@ const signIn = async (req, res) => {
     return res.stdJson(SC.OK, user)
   } catch (e) {
     console.log(e)
-    return res.stdJson(
-      SC.SERVER_ERROR,
-      null,
-      'Could not perform operation at this time, kindly try again later.'
-    )
+    const stCode = e.statusCode || SC.SERVER_ERROR
+    const message = e.message || 'Could not perform operation at this time'
+
+    return res.stdJson(stCode, message, null)
   }
 }
 
