@@ -9,7 +9,9 @@ const userRepository = dataSource.getRepository('User')
 const jwtConf = {
   secret: process.env.JWT_SECRET || 'secret',
   verifyOptions: {
-    algorithms: [process.env.JWT_ALGORITHM] || ['HS256'],
+    algorithms: process.env.JWT_ALGORITHM
+      ? [process.env.JWT_ALGORITHM]
+      : ['HS256'],
   },
 }
 
