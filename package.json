@@ -4,6 +4,11 @@
   "description": "",
   "type": "module",
   "main": "app.js",
+  "jest": {
+    "bail": 1,
+    "verbose": true,
+    "transform": {}
+  },
   "scripts": {
     "start": "node app.js",
     "lint": "eslint .",
