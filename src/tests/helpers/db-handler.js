@@ -1,31 +1,29 @@
-import Knex from 'knex'
-import chalk from 'chalk'
-import configs from './../../knexfile.js'
+import { DataSource } from 'typeorm'
+import enVariables from '../../config/index.js'
 
-let knex
-
-const Connect = async () => {
-  knex = Knex(configs[process.env.NODE_ENV || 'test'])
-  const dialect = process.env.DB_DIALECT || 'pg'
-  knex
-    .raw('SELECT version() as version')
-    .then(() => {
-      console.log(`app:database ${dialect} connection with knex success!`)
-    })
-    .catch((e) => {
-      console.log(
-        chalk.bgRed(`app:database ${dialect} connection with knex error:` + e)
-      )
-    })
+const shutDown = () => {
+  dataSource.destroy()
 }
 
-const Close = async () => {
-  try {
-    console.log('close db connection')
-    await knex.destroy()
-  } catch (error) {
-    console.error(error)
-  }
-}
+const config = enVariables
 
-export { Connect, Close, knex }
+const dataSource = new DataSource({
+  type: config.dialect || 'mysql',
+  host: config.host,
+  port: config.port || 3306,
+  username: config.username,
+  password: config.password,
+  database: config.database,
+  synchronize: false,
+  logging: config.logging,
+  entities: ['src/models/entity/**/*{.ts,.js}'],
+  migrations: ['src/database/migrations/**/*{.ts,.js}'],
+  cli: {
+    migrationsDir: 'src/database/migrations',
+  },
+  migrationsTableName: 'typeorm_migration',
+})
+
+dataSource.initialize().then(() => console.log('connected to DB succesfully!'))
+
+export { dataSource, shutDown }

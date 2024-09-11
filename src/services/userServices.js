@@ -22,6 +22,10 @@ const userServices = {
   updateUser: ({ user_id, ...data }) => {
     return userRepository.save({ user_id, ...data })
   },
+
+  delUser: ({ user_id }) => {
+    return userRepository.delete({ user_id })
+  },
 }
 
 export default userServices
