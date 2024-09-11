@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
-import dataSource from '../models/index.js'
+import { dataSource } from '#models/index.js'
 
-import { SC } from '../helper/statuscode.js'
+import { SC } from '#helper/statuscode.js'
 const { verify } = jwt
 
 const userRepository = dataSource.getRepository('User')

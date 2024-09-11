@@ -24,7 +24,7 @@ const config = {
     logging,
     use_env_variable,
   },
-  testing: {
+  test: {
     username,
     password,
     database,

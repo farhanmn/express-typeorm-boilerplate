@@ -1,24 +1,25 @@
 import request from 'supertest'
 
-import { app, shutDown } from './../../app.js'
-import { dataSource, shutDown as Close } from '#tests/helpers/db-handler.js'
+import { app, shutDown } from './../../../app.js'
+import { dataSource, Connect, Close } from '#tests/helpers/db-handler.js'
+
 const userRepository = dataSource.getRepository('User')
 
 import { hash } from '#helper/crypto.js'
 
 describe('Testing Auth Routes', () => {
   afterAll(async () => {
+    await userRepository.delete({ user_email: 'only4Test@testing.com' })
+    await userRepository.delete({ user_email: 'only4Test1@testing.com' })
+
     await Close()
     shutDown()
   })
-  afterAll(async () => {
-    await userRepository.delete({ user_email: 'only4Test@testing.com' })
-    await userRepository.delete({ user_email: 'only4Test1@testing.com' })
-  })
   beforeAll(async () => {
+    await Connect()
     const hashedPassword = hash('password')
 
-    await userRepository.create({
+    await userRepository.save({
       user_name: 'Testing',
       user_email: 'only4Test@testing.com',
       user_password: hashedPassword.pwd,
@@ -26,7 +27,7 @@ describe('Testing Auth Routes', () => {
       user_status: 1,
     })
 
-    await userRepository.create({
+    await userRepository.save({
       user_name: 'Testing',
       user_email: 'only4Test1@testing.com',
       user_password: hashedPassword.pwd,
@@ -60,8 +61,8 @@ describe('Testing Auth Routes', () => {
         .expect(401)
 
       const body = response.body
-      expect(body).toHaveProperty('status', 'error')
-      expect(body).toHaveProperty('message', 'Incorrect password')
+      expect(body).toHaveProperty('status', 401)
+      expect(body).toHaveProperty('message', 'email or password is incorrect')
       expect(body).not.toHaveProperty('token')
     })
 
@@ -72,10 +73,10 @@ describe('Testing Auth Routes', () => {
           user_email: 'only4Test@testing1.com',
           user_password: 'password',
         })
-        .expect(400)
+        .expect(401)
 
       const body = response.body
-      expect(body).toHaveProperty('status', 'error')
+      expect(body).toHaveProperty('status', 401)
       expect(body).toHaveProperty(
         'message',
         'User with that email or phone does not exist'
@@ -90,11 +91,11 @@ describe('Testing Auth Routes', () => {
           user_email: 'only4Test1@testing.com',
           user_password: 'password',
         })
-        .expect(400)
+        .expect(401)
 
       const body = response.body
-      expect(body).toHaveProperty('status', 'error')
-      expect(body).toHaveProperty('message', 'User is not active')
+      expect(body).toHaveProperty('status', 401)
+      expect(body).toHaveProperty('message', 'User is inactive')
       expect(body).not.toHaveProperty('token')
     })
   })

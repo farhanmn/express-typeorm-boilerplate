@@ -1,25 +1,21 @@
-import { DataSource } from 'typeorm'
-import enVariables from '../config/index.js'
+import dataSource from '#models/dataSource.js'
 
-const config = enVariables
+const Connect = async () => {
+  try {
+    await dataSource.initialize()
+    console.log('connected to DB succesfully!')
+  } catch (error) {
+    console.error('Error during Data Source initialization:', error)
+  }
+}
 
-const dataSource = new DataSource({
-  type: config.dialect || 'mysql',
-  host: config.host,
-  port: config.port || 3306,
-  username: config.username,
-  password: config.password,
-  database: config.database,
-  synchronize: false,
-  logging: config.logging,
-  entities: ['src/models/entity/**/*{.ts,.js}'],
-  migrations: ['src/database/migrations/**/*{.ts,.js}'],
-  cli: {
-    migrationsDir: 'src/database/migrations',
-  },
-  migrationsTableName: 'typeorm_migration',
-})
+const Close = async () => {
+  try {
+    console.log('close db connection')
+    await dataSource.destroy()
+  } catch (error) {
+    console.error(error)
+  }
+}
 
-dataSource.initialize().then(() => console.log('connected to DB succesfully!'))
-
-export default dataSource
+export { dataSource, Connect, Close }

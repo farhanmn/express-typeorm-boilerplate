@@ -1,9 +1,9 @@
 import moment from 'moment'
 
-import { SC } from '../helper/statuscode.js'
-import { create_token, verify } from '../helper/user.js'
-import userServices from '../services/userServices.js'
-import { errorValue, validateParams } from '../helper/validate.js'
+import { SC } from '#helper/statuscode.js'
+import { create_token, verify } from '#helper/user.js'
+import userServices from '#services/userServices.js'
+import { errorValue, validateParams } from '#helper/validate.js'
 
 const signUp = async (req, res) => {
   const { user_email, user_password, user_name, user_phone } = req.body
@@ -30,7 +30,7 @@ const signUp = async (req, res) => {
     const stCode = e.statusCode || SC.SERVER_ERROR
     const message = e.message || 'Could not perform operation at this time'
 
-    return res.stdJson(stCode, message, null)
+    return res.stdJson(stCode, null, message)
   }
 }
 
@@ -43,6 +43,11 @@ const signIn = async (req, res) => {
     errorValue(!user, {
       statusCode: SC.UNAUTHORIZED,
       message: 'User with that email or phone does not exist',
+    })
+
+    errorValue(user.user_status === 0, {
+      statusCode: SC.UNAUTHORIZED,
+      message: 'User is inactive',
     })
 
     const verifyData = verify(user, { user_password })
@@ -63,7 +68,7 @@ const signIn = async (req, res) => {
     const stCode = e.statusCode || SC.SERVER_ERROR
     const message = e.message || 'Could not perform operation at this time'
 
-    return res.stdJson(stCode, message, null)
+    return res.stdJson(stCode, null, message)
   }
 }
 

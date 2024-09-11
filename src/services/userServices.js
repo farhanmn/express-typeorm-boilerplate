@@ -1,5 +1,6 @@
-import { hash } from '../helper/crypto.js'
-import dataSource from '../models/index.js'
+import { hash } from '#helper/crypto.js'
+import { dataSource } from '#models/index.js'
+
 const userRepository = dataSource.getRepository('User')
 
 const userServices = {
