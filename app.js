@@ -37,7 +37,7 @@ let server
 const startServer = async () => {
   try {
     if (process.env.NODE_ENV != 'test') {
-      connectDB(process.env.MONGODB_URL)
+      await connectDB()
     }
 
     server = app.listen(port, () => {
