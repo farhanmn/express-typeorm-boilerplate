@@ -1,7 +1,8 @@
 import { hash } from '#helper/crypto.js'
 import { dataSource } from '#models/index.js'
+import { User } from '#models/entity/userEntity.js'
 
-const userRepository = dataSource.getRepository('User')
+const userRepository = dataSource.getRepository(User)
 
 const userServices = {
   checkUser: ({ user_email, user_phone = null }) => {

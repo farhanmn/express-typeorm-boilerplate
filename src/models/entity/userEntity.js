@@ -1,10 +1,10 @@
 import { EntitySchema } from 'typeorm'
-import { User } from '#models/model/User.js'
+import { User as UserModel } from '#models/model/User.js'
 
-const UserEntity = new EntitySchema({
+const User = new EntitySchema({
   name: 'User',
   tableName: 'user',
-  target: User,
+  target: UserModel,
 
   columns: {
     user_id: { primary: true, type: 'text', generated: 'uuid' },
@@ -36,4 +36,4 @@ const UserEntity = new EntitySchema({
   },
 })
 
-export default UserEntity
+export { User }

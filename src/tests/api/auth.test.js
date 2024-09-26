@@ -2,8 +2,9 @@ import request from 'supertest'
 
 import { app, shutDown } from './../../../app.js'
 import { dataSource, Connect, Close } from '#tests/helpers/db-handler.js'
+import { User } from '#models/entity/userEntity.js'
 
-const userRepository = dataSource.getRepository('User')
+const userRepository = dataSource.getRepository(User)
 
 import { hash } from '#helper/crypto.js'
 
