@@ -7,8 +7,8 @@ An Express Boilerplate with Javascript ES6 style and TypeORM
 Clone this express-boilerplate with git
 
 ```bash
-  git clone https://github.com/farhannjb/express-boilerplate
-  cd express-boilerplate
+  git clone https://github.com/farhannjb/express-typeorm-boilerplate
+  cd express-typeorm-boilerplate
   ## rename .env.development to .env
   ## adjust the value inside as you needed
   yarn install
@@ -49,6 +49,6 @@ To run this project, you will need to add the following environment variables to
 
 ## Authors
 
-- [@farhannjb](https://github.com/farhannjb)
+- [@farhanmn](https://github.com/farhanmn)
 
 [^1]: If you have generated the migration script, please make sure to change it to ES6 style, such as changing `module.exports` to `export` and remove all unnucessary imported data.
